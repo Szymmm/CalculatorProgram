@@ -13,7 +13,6 @@ namespace CalculatorProgram
                 return;
             }
             calc.CalculateDataFromFile(args[0]);
-            Console.ReadKey();
         }
 
         

@@ -56,12 +56,6 @@ namespace CalculatorProgram
         {
             string line;
             List<string> listOfLines = new List<string>();
-            if (!File.Exists(fileName))
-            {
-                Console.WriteLine("error");
-                return listOfLines;
-            }
-
             StreamReader file = new StreamReader(fileName);
             while ((line = file.ReadLine()) != null)
             {
@@ -82,8 +76,13 @@ namespace CalculatorProgram
                     Regex regex = new Regex(@"(?<=\s)(.*)");
                     Match match = regex.Match(line);
                     string nextFile = match.Value;
-                    myTempList.AddRange(TransferFileToListOfLines(nextFile));
-                    myTempList.Add(printResultFromFile);
+                    if (!File.Exists(nextFile))
+                        myTempList.Add("error");
+                    else
+                    {
+                        myTempList.AddRange(TransferFileToListOfLines(nextFile));
+                        myTempList.Add(printResultFromFile);
+                    }
                 }
                 else
                     myTempList.Add(line);
@@ -103,8 +102,7 @@ namespace CalculatorProgram
                 lineArgs[1] = match[1].Value;
                 lineArgs[2] = match[2].Value;
             }
-            else
-                Console.WriteLine("error: Interprete line");
+           
             return lineArgs;
         }
 
